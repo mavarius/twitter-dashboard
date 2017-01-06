@@ -1,8 +1,24 @@
-// import twitState from '../initialState/twitState'
-
-export default function twit (state = {}, action) {
+export function user (state = null, action) {
   switch (action.type) {
-    case 'FETCH_DATA_SUCCESS':
+    case 'FETCH_USER_SUCCESS':
+      return action.payload
+    default:
+      return state
+  }
+}
+
+export function tweets (state = null, action) {
+  switch (action.type) {
+    case 'FETCH_TWEETS_SUCCESS':
+      return action.payload
+    default:
+      return state
+  }
+}
+
+export function tweet (state = null, action) {
+  switch (action.type) {
+    case 'ISOLATE_TWEET':
       return action.payload
     default:
       return state

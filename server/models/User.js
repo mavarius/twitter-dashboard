@@ -8,8 +8,8 @@ const client = new Twitter({
 })
 
 exports.search = (query, cb) => {
-  client.get('statuses/user_timeline', query, (err, tweets, response) => {
+  client.get('users/show', query, (err, userData, response) => {
     if (err) return cb(err)
-    cb(null, tweets)
+    cb(null, userData)
   })
 }
