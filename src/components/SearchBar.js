@@ -12,8 +12,7 @@ const handleSearch = (e, search) => {
     query = `user/?screen_name=${searchInput.value}`
   }
 
-  // search(searchEntry, searchRating)
-  console.log('query: ', query)
+  search(query)
 }
 
 const renderSearchBar = (search) => (

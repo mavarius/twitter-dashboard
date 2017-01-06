@@ -2,7 +2,7 @@
 
 export default function twit (state = {}, action) {
   switch (action.type) {
-    case 'CHANGE_DEFAULT':
+    case 'FETCH_DATA_SUCCESS':
       return action.payload
     default:
       return state
