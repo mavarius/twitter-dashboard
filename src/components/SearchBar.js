@@ -16,10 +16,10 @@ const handleSearch = (e, search) => {
 }
 
 const renderSearchBar = search => (
-  <div className="searchBar">
+  <div className="searchBlock">
     <form onSubmit={e => handleSearch(e, search)}>
-      <div className="searchBlock">
-        <input id="searchInput" type="text" placeholder="@screenname" required />
+      <div className="searchBar">
+        <input id="searchInput" type="text" placeholder="@screen_name" required />
         <button className="searchBtn"><i className="fa fa-search" aria-hidden="true" /></button>
       </div>
     </form>

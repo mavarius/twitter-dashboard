@@ -1,0 +1,66 @@
+// breakpoints
+$tablet: "(min-width: 768px)"
+$desktop: "(min-width: 1200px)"
+
+// colors
+$lightBlue: rgb(22, 147, 224)
+$blue: rgb(5, 55, 86)
+$darkBlue: rgb(0, 25, 41)
+
+
+.appTitle
+  text-align: center
+  background-image: url('../images/jitterDashLogo.png')
+  background-repeat: no-repeat
+  background-size: contain
+  width: 40vw
+  max-width: 460px
+  height: 12vw
+  max-height: 130px
+  text-indent: -200vw
+
+.headerSearch
+  text-align: center
+  display: flex
+  flex-direction: column
+  height: 100vh
+  justify-content: center
+  align-items: center
+
+.searchBlock
+  display: flex
+  align-items: center
+
+  input
+    z-index: 100
+    border: none
+    background-color: white
+    border-radius: 100vmax
+    height: 12vmin
+    width: 60vmin
+    text-indent: 10%
+    padding: 0
+    color: $lightBlue
+    @media #{$tablet}
+      height: 7vmin
+      width: 50vmin
+
+  button
+    z-index: 200
+    font-size: 1em
+    color: white
+    background-color: $lightBlue
+    border: none
+    border-radius: 100vmax
+    height: 8vmin
+    width: 8vmin
+    text-align: center
+    padding: 0
+    margin: 0 0 0 -11vmin
+    @media #{$tablet}
+      height: 5vmin
+      width: 5vmin
+      margin: 0 0 0 -7vmin
+
+  button:hover
+    height: 

@@ -24,3 +24,12 @@ export function tweet (state = null, action) {
       return state
   }
 }
+
+export function stats (state = null, action) {
+  switch (action.type) {
+    case 'ANALYZE':
+      return action.payload
+    default:
+      return state
+  }
+}
