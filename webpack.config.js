@@ -38,6 +38,7 @@ module.exports = {
         loader: 'url-loader?limit=10000',
         test: /\.(png|jpg|jpeg|gif|woff)$/
       },
+      { test: /\.svg$/, loader: 'svg-loader' },
       { test: /(\.s[ca]ss)$/, loaders: ['style', 'css', 'sass'] }
     ]
   }

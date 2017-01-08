@@ -1,0 +1,41 @@
+// breakpoints
+$tablet: "(min-width: 768px)"
+$desktop: "(min-width: 1200px)"
+
+// colors
+$lightBlue: rgba(22, 147, 224, 1)
+$blue: rgba(5, 55, 86, 1)
+$darkBlue: rgba(0, 25, 41, 1)
+$orange: rgba(255, 130, 13, 1)
+
+.hashtagBlock
+  margin: 10vh auto
+  width: 90vw
+
+.hashtags
+  margin: 10vh auto
+  width: 90vw
+  display: flex
+  flex-wrap: wrap
+  justify-content: space-around
+  align-items: center
+
+  span
+    font-weight: bold
+    color: $darkBlue
+    margin: 1vmin
+
+.chartBlock
+  width: 90vw
+  margin: 0 auto
+  text-align: center
+  display: flex
+  flex-wrap: wrap
+  justify-content: space-around
+
+  .analyticsChart
+    // margin: 10vmin
+    flex-basis: 1
+    flex-grow: 1
+    @media#{$tablet}
+      height: 60vmin

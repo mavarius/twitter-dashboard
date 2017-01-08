@@ -9,7 +9,7 @@ function* fetchData(action) {
   if (userData.status >= 400) console.error
     else yield put({ type: 'FETCH_USER_SUCCESS', payload: userData.data })
 
-  const twitterFeed = yield call(fetchSearch, `statuses/?include_rts=false&trim_user=true&count=200&screen_name=${action.payload}`)
+  const twitterFeed = yield call(fetchSearch, `statuses/?include_rts=false&trim_user=true&count=100&screen_name=${action.payload}`)
   if (twitterFeed.status >= 400) console.error
     else yield put({ type: 'FETCH_TWEETS_SUCCESS', payload: twitterFeed.data })
 

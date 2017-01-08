@@ -6,26 +6,43 @@ const renderUser = user => {
   let latest = moment(user.status.created_at, 'dd MMM DD HH:mm:ss ZZ YYYY', 'en')
 
   return (
-    <div>
-      <div className="profileImage"><img src={user.profile_image_url}/></div>
-      <h2>{user.name}</h2>
-      <h3>{user.screen_name}</h3>
-      <dl>
-        <dt>Location</dt><dd>{user.location}</dd>
-        <dt>Description</dt><dd>{user.description}</dd>
-      </dl>
-      <p>created
-        <span className="twit_day">{created.format('dddd')}</span>
-        <span className="twit_date">{created.format('MMM DD YYYY')}</span>
-        <span className="twit_time">{created.format('h:mma')}</span>
-      </p>
-      <p>last update
-        <span className="twit_day">{latest.format('dddd')}</span>
-        <span className="twit_date">{latest.format('MMM DD YYYY')}</span>
-        <span className="twit_time">{latest.format('h:mma')}</span>
-      </p>
-      <p>{user.followers_count} followers</p>
-      <p>{user.statuses_count} tweets</p>
+    <div className="userProfile">
+      <div className="dossier">
+        <div className="profileImage">
+          <img src={user.profile_image_url.replace('_normal', '')}/>
+        </div>
+        <div>
+          <h2 className="userName">{user.name}</h2>
+          <p className="screenName">@{user.screen_name}</p>
+          <p className="location">{user.location}</p>
+        </div>
+      </div>
+      <p className="description">{user.description}</p>
+
+      <div className="userDates">
+        <div className="createdDate">
+          <h3>created</h3>
+          <p>{created.format('dddd')}</p>
+          <p>{created.format('MMM DD YYYY')}</p>
+          <p>{created.format('h:mma')}</p>
+        </div>
+        <div className="updatedDate">
+          <h3>last update</h3>
+          <p>{latest.format('dddd')}</p>
+          <p>{latest.format('MMM DD YYYY')}</p>
+          <p>{latest.format('h:mma')}</p>
+        </div>
+      </div>
+      <div className="sums">
+        <div>
+          <span>{user.followers_count}</span>
+          <span>followers</span>
+        </div>
+        <div>
+          <span>{user.statuses_count}</span>
+          <span>tweets</span>
+        </div>
+      </div>
     </div>
   )
 }

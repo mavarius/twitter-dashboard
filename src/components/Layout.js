@@ -18,14 +18,21 @@ import SearchBar from './SearchBar'
 }))
 export default class Layout extends Component {
   render () {
-    const { search } = this.props
+    const { search, user } = this.props
+
+    let headerclass = "headerSearch"
+    if (user) headerclass = "headerSearch collapse"
 
     return (
       <div className="container">
-        <div className="headerSearch">
-          <h1 className="appTitle">Jitter Dash</h1>
-          <SearchBar search={search} />
-          <p>search for a twitter screen name to begin</p>
+        <div className={headerclass}>
+          <div className='skew'>
+            <div className='unskew'>
+              <h1 className="appTitle">Jitter Dash</h1>
+              <SearchBar search={search} />
+              <p>search for a twitter screen name to begin</p>
+            </div>
+          </div>
         </div>
         {this.props.children}
       </div>
