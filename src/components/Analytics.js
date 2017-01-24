@@ -4,19 +4,29 @@ import { connect } from 'react-redux'
 import User from './User'
 import TweetList from './TweetList'
 import TweetStats from './TweetStats'
-import { Defaults, Bar, Line } from 'react-chartjs-2';
+import { Defaults, Bar, Line, defaults } from 'react-chartjs-2';
 
 @connect(state => ({
   user: state.user,
   tweet: state.tweet,
   tweets: state.tweets,
-  stats: state.stats
+  stats: state.stats,
+  subSet: state.subSet
 }), dispatch => ({
   search(query) {
     dispatch({type: 'SEARCH', payload: query})
   },
   isolate(singleTweet) {
     dispatch({type: 'ISOLATE', payload: singleTweet})
+  },
+  drill(drillSet) {
+    dispatch({type: 'DRILL', payload: drillSet})
+  },
+  clearSubSet() {
+    dispatch({type: 'CLEAR_SUBSET'})
+  },
+  persist(persistData) {
+    dispatch({type: 'PERSIST', payload: persistData})
   }
 }))
 export default class Analytics extends Component {
@@ -28,8 +38,10 @@ export default class Analytics extends Component {
   }
 
   renderChart(data, total, chartLabel) {
+    const { subSet, stats, drill, persist } = this.props
+
     const chartData = {
-        labels: this.props.stats.timestamp,
+        labels: subSet ? subSet.timestamp : stats.timestamp,
         datasets: [{
             label: chartLabel,
             data: data,
@@ -40,16 +52,37 @@ export default class Analytics extends Component {
         }]
     }
 
+    defaults.global.elements.point.hitRadius = 10
+
+    const persistData = JSON.parse(JSON.stringify(stats))
+
     return (
       <div className="analyticsChart">
         <h2>{total} {chartLabel}</h2>
         <Line
           ref='chart'
           data={chartData}
-          // width={100}
-          // height={100}
+          getElementAtEvent={(ele) => {
+            const { tweets } = this.props
+            let sliceMin = ele[0]._index - 5
+            let sliceMax = ele[0]._index + 5
+
+            if (sliceMin < 0) {
+              sliceMax += Math.abs(sliceMin)
+              sliceMin = 0
+            } else if (sliceMax > (tweets.length - 1)) {
+              sliceMin -= sliceMax - (tweets.length - 1)
+              sliceMax = tweets.length - 1
+            }
+
+            let drillSet = JSON.parse(JSON.stringify(tweets))
+            drillSet = drillSet.splice(sliceMin, 10)
+
+            drill(drillSet)
+            persist(persistData)
+          }}
           options={{
-            maintainAspectRatio: false
+            maintainAspectRatio: false,
           }}
         />
       </div>
@@ -68,8 +101,25 @@ export default class Analytics extends Component {
   }
 
   render () {
-    const { isolate } = this.props
-    const { user, tweets, tweet, stats } = this.props
+    const { isolate, drill, persist, clearSubSet } = this.props
+    const { user, tweets, tweet, stats, subSet } = this.props
+
+    var retweetedData
+    var favoritedData
+    var retweetedTotal
+    var favoritedTotal
+
+    if (subSet) {
+      retweetedData = subSet.retweeted
+      favoritedData = subSet.favorited
+      retweetedTotal = subSet.totalRetweeted
+      favoritedTotal = subSet.totalFavorited
+    } else if (stats) {
+      retweetedData = stats.retweeted
+      favoritedData = stats.favorited
+      retweetedTotal = stats.totalRetweeted
+      favoritedTotal = stats.totalFavorited
+    }
 
     return (
         <div className="content">
@@ -83,17 +133,23 @@ export default class Analytics extends Component {
 
           {stats ?
             <div className="hashtagBlock">
-              <h2>Analysis of last {tweets.length} tweets</h2>
               <div className="hashtags">
                 {this.renderHashtags()}
               </div>
+              <h2>Analysis of last {tweets.length} tweets</h2>
+              {subSet ?
+                <h3>
+                  (Subset of {subSet.retweeted.length} tweets)<br/>
+                  <button className='filterBtn' onClick={() => clearSubSet()}>return to full set</button>
+                </h3>
+               : <h3><br/><br/></h3>}
             </div>
           : null}
 
           {stats ?
           <div className="chartBlock">
-            {stats ? this.renderChart(stats.retweeted, stats.totalRetweeted, 'Retweets') : null }
-            {stats ? this.renderChart(stats.favorited, stats.totalFavorited, 'Favorites') : null }
+            {stats ? this.renderChart(retweetedData, retweetedTotal, 'Retweets') : null }
+            {stats ? this.renderChart(favoritedData, favoritedTotal, 'Favorites') : null }
           </div>
            : null}
 

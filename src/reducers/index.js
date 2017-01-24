@@ -1,10 +1,11 @@
 import { combineReducers } from 'redux'
 
-import { user, tweet, tweets, stats } from './twit'
+import { user, tweet, tweets, stats, subSet } from './twit'
 
 export default combineReducers({
   user: user,
   tweet: tweet,
   tweets: tweets,
-  stats: stats
+  stats: stats,
+  subSet: subSet
 })

@@ -19,6 +19,13 @@ function* fetchData(action) {
   }
 }
 
+function* makeSubSet(action) {
+  const subSet = action.payload
+
+  const setAnalytics = yield call(analyze, subSet)
+  yield put({ type: 'MAKE_SUBSET', payload: setAnalytics })
+}
+
 function* isolateTweet(action) {
   const singleTweet = action.payload
   yield put({ type: 'ISOLATE_TWEET', payload: singleTweet })
@@ -32,10 +39,15 @@ function* watchTweetSelect() {
   yield takeEvery('ISOLATE', isolateTweet)
 }
 
+function* watchDrillDown() {
+  yield takeEvery('DRILL', makeSubSet)
+}
+
 // ROOT SAGA
 export default function* rootSaga() {
   yield [
     watchTwitterSearch(),
-    watchTweetSelect()
+    watchTweetSelect(),
+    watchDrillDown()
   ]
 }

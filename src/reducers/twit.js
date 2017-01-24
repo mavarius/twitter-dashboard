@@ -29,6 +29,19 @@ export function stats (state = null, action) {
   switch (action.type) {
     case 'ANALYZE':
       return action.payload
+    case 'PERSIST':
+      return action.payload
+    default:
+      return state
+  }
+}
+
+export function subSet (state = null, action) {
+  switch (action.type) {
+    case 'MAKE_SUBSET':
+      return action.payload
+    case 'CLEAR_SUBSET':
+      return null
     default:
       return state
   }
